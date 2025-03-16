@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <form action="#" method="post">
+        <label for="name">Name</label>
+        <input type="text" for="name" name="name"><br><br>
+        <label for="age">Age</label>
+        <input type="number" name="age"><br><br>
+        <label for="gender">Gender</label>
+        <select name="gender" id="12">
+            <option value="">Please select one!</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br><br>
+        <label for="height">Height (inch.)</label>
+        <input type="number" name="height"><br><br>
+        <label for="password">Password</label>
+        <input type="password" name="password"><br><br>
+        <label for="phone">Phone Number (with country code)</label>
+        <input type="tel" name="phone"><br><br>
+        <input type="submit"><br><br>
+    </form>
+</body>
+</html>
