@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Roast AI 🔥</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Roast AI 🔥</h1>
+        <p>Ask me anything... and prepare to get roasted. 😈</p>
+        
+        <form id="roastForm">
+            <input type="text" id="user_input" name="user_input" placeholder="Type your question..." required>
+            <button type="submit">Get Roasted</button>
+        </form>
+
+        <p id="response"></p>
+    </div>
+
+    <script>
+        document.getElementById("roastForm").onsubmit = function(event) {
+            event.preventDefault();
+            
+            let user_input = document.getElementById("user_input").value;
+
+            fetch("/roast", {
+                method: "POST",
+                body: new URLSearchParams({ user_input: user_input }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerText = data.response;
+            });
+        };
+    </script>
+</body>
+</html>
