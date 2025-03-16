@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
-    <form action="#" method="post">
+    <form action="#" method="post" id="myForm">
         <label for="name">Name</label>
         <input type="text" for="name" name="name"><br><br>
         <label for="age">Age</label>
@@ -27,5 +27,24 @@
         <input type="tel" name="phone"><br><br>
         <input type="submit"><br><br>
     </form>
+
+    <script>
+        const form = document.getElementById('myForm');
+        const elements = form.querySelectorAll('label, input, select');
+
+        elements.forEach(element => {
+            element.addEventListener('click', () => {
+                const maxX = window.innerWidth - element.offsetWidth;
+                const maxY = window.innerHeight - element.offsetHeight;
+
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+
+                element.style.position = 'absolute';
+                element.style.left = randomX + 'px';
+                element.style.top = randomY + 'px';
+            });
+        });
+    </script>
 </body>
 </html>
