@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>🔥 Roast AI 🔥</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -14,12 +15,24 @@
         <form id="roastForm">
             <input type="text" id="user_input" name="user_input" placeholder="Type your question..." required>
             <button type="submit">Get Roasted</button>
+=======
+    <title>Get Roasted</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='roast.css') }}">
+</head>
+<body>
+    <div class="first-cont">
+        <h1> Toast AI </h1>
+        <form id="roast-form">
+            <input type="text" id="user-input" name="input" placeholder="Ask your question here!" required>
+            <button type="submit" id="submit-btn">Ask?!</button>
+>>>>>>> 694f341d8b84f6191a8a255f1ade30f5ef1b0e56
         </form>
 
         <p id="response"></p>
     </div>
 
     <script>
+<<<<<<< HEAD
         document.getElementById("roastForm").onsubmit = function(event) {
             event.preventDefault();
             
@@ -35,6 +48,51 @@
                 document.getElementById("response").innerText = data.response;
             });
         };
+=======
+        document.getElementById("roast-form").onsubmit = function(event) {
+            event.preventDefault();
+            
+            let userInput = document.getElementById("user-input").value;
+            let responseField = document.getElementById("response");
+            let submitButton = document.getElementById("submit-btn");
+
+            if (!userInput.trim()) {
+                alert("Enter something to roast!");
+                return;
+            }
+
+            submitButton.disabled = true;
+            responseField.innerText = "Thinking of a roast... 🔥";
+
+            fetch("/roast", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_input: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let roastText = data.response;
+                responseField.innerText = roastText; 
+                speak(roastText); 
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                responseField.innerText = "Oops! Something went wrong.";
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                document.getElementById("user-input").value = ""; 
+            });
+        };
+
+        function speak(text) {
+            let speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "en-US";
+            speech.pitch = 1;
+            speech.rate = 1;
+            window.speechSynthesis.speak(speech);
+        }
+>>>>>>> 694f341d8b84f6191a8a255f1ade30f5ef1b0e56
     </script>
 </body>
 </html>

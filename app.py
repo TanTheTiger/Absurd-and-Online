@@ -1,32 +1,21 @@
-from flask import Flask, render_template, request, jsonify
-import pyttsx3
+from flask import Flask, render_template, request, jsonify, redirect
 import webbrowser
 import random
 import google.generativeai as genai
-import threading
 
 app = Flask(__name__)
 
+# Configure Gemini AI
 GEMINI_API_KEY = "AIzaSyAaDAw7s8B9_llgrbMBL_B1vUroz6Lk76Y"
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("models/gemini-1.5-pro")
-
-def speak(text):
-    def run():
-        engine = pyttsx3.init()
-        engine.setProperty("rate", 150)
-        engine.say(text)
-        engine.runAndWait()
-    thread = threading.Thread(target=run)
-    thread.start()
-    return text
 
 def get_roast(user_input):
     try:
         if random.random() < 0.2:
             actions = [
                 ("This might help! bozo", lambda: webbrowser.open("https://www.youtube.com/watch?v=xvFZjo5PgG0")),
-                ("Dont you go to school?, give me your teachers ")
+                ("Don't you go to school? Give me your teacher's number!", None)
             ]
             action_text, action = random.choice(actions)
             if action:
@@ -38,22 +27,30 @@ def get_roast(user_input):
         return roast_text
     except Exception:
         return "Aw Shucks, something went wrong!"
-    
+
+@app.route("/")
+def index():
+    return redirect("/login")
 
 @app.route("/roast", methods=["POST", "GET"])
 def roast():
     if request.method == "POST":
-        user_input = request.form.get("user_input")
+        data = request.json if request.is_json else request.form
+        user_input = data.get("user_input", "").strip()
+        
+        if not user_input:
+            return jsonify({"response": "Try asking something first, genius!"})
+        
         roast_response = get_roast(user_input)
-        speak(roast_response)
-        return jsonify({"response": roast_response})
-    
-    return render_template("roast.html")
+        return jsonify({"response": roast_response})  
 
+    return render_template("roast.html")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        return redirect("/roast")
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
