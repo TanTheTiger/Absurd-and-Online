@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 import pyttsx3
 import webbrowser
 import random
@@ -25,8 +25,8 @@ def get_roast(user_input):
     try:
         if random.random() < 0.2:
             actions = [
-                ("This might help! bozo", lambda: webbrowser.open("https://www.youtube.com/watch?v=xvFZjo5PgG0")),
-                ("Dont you go to school?, give me your teachers ")
+                ("This might help! bozo", lambda: webbrowser.open("https://www.yountube.com/watch?v=xvFZjo5PgG0")),
+                ("Dont you go to school?, give me your teachers number! ", lambda:None)
             ]
             action_text, action = random.choice(actions)
             if action:
@@ -38,6 +38,10 @@ def get_roast(user_input):
         return roast_text
     except Exception:
         return "Aw Shucks, something went wrong!"
+
+@app.route("/")
+def index():
+    return redirect("/login")
     
 
 @app.route("/roast", methods=["POST", "GET"])
@@ -53,6 +57,8 @@ def roast():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    if request.method == "POST":
+        return redirect("/roast")
     return render_template('login.html')
 
 if __name__ == "__main__":
