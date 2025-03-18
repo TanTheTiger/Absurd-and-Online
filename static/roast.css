@@ -1,42 +1,14 @@
 body {
-<<<<<<< HEAD
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #1e1e1e;
-    color: white;
-=======
     font-family: 'Arial', sans-serif;
     text-align: center;
     background-color: #121212;
     color: #e0e0e0; 
     margin: 0;
     padding: 0;
->>>>>>> 694f341d8b84f6191a8a255f1ade30f5ef1b0e56
 }
 
 .container {
     margin-top: 100px;
-<<<<<<< HEAD
-}
-
-input {
-    padding: 10px;
-    width: 300px;
-    margin: 10px;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: darkred;
-=======
     padding: 20px;
     background-color: #1e1e1e;
     border-radius: 10px; 
@@ -82,5 +54,4 @@ button:hover {
 
 button:active {
     transform: translateY(0); 
->>>>>>> 694f341d8b84f6191a8a255f1ade30f5ef1b0e56
 }
